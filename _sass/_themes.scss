@@ -4,15 +4,23 @@
 
 body, .light {
     @include theme(
-        $text-color: #171717,
-        $background-color: white,
-        $brand-color: royalblue,
+        $background-color: $white,
+        $text-color: $black,
+        $brand-color: $red,
     );
 }
 
 .dark {
     @include theme(
-        $text-color: white,
-        $background-color: #171717,
+        $background-color: $black,
+        $text-color: $white,
+    );
+}
+
+.red {
+    @include theme(
+        $background-color: $red,
+        $text-color: $white,
+        $brand-color: $black,
     );
 }
