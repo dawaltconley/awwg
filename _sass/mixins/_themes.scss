@@ -14,14 +14,6 @@
             $light-text: mix($text-color, $background-color, 72%);
         }
 
-        @if $light-theme {
-            -webkit-font-smoothing: subpixel-antialiased;
-            -moz-osx-font-smoothing: auto;
-        } @else {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
         @if $ct-tx-bg < 4.5 and $aa {
             @warn "The contrast ratio of a theme's text (#{$text-color}) and background (#{$background-color}) colors is #{$ct-tx-bg}, which does not meet WCAG 2.0 AA standards.";
         } @else if $ct-tx-bg < 7 and $aaa {
