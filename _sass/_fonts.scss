@@ -1,0 +1,49 @@
+$font-face: (
+    "ManifoldDSA": (
+        weight: (
+            "Light": 300,
+            "Regular": 400,
+            "Medium": 500,
+            "DemiBold": 600,
+            "Bold": 700,
+            "ExtraBold": 800,
+            "Heavy": 900,
+        ),
+        style: (
+            "": normal,
+            "Italic": italic,
+        ),
+        family: "Manifold DSA",
+        filetype: (
+            "eot": "embedded-opentype",
+            "woff": "woff",
+            "woff2": "woff2",
+            "ttf": "truetype",
+        ),
+        src: "#{$baseurl}/assets/font",
+    ),
+);
+
+@each $font-name, $font in $font-face {
+    @each $weight-name, $weight in map-get($font, weight) {
+        @each $style-name, $style in map-get($font, style) {
+            $file: '#{map-get($font, src)}/#{$font-name}-#{$weight-name}#{$style-name}';
+
+            $all-srcs: ();
+            @each $ext, $format in map-get($font, filetype) {
+                @if ($ext == "eot") { $ext: "#{$ext}?#iefix"; }
+                $all-srcs: append($all-srcs, url(#{$file}.#{$ext}) format(#{$format}), comma);
+            }
+
+            @font-face {
+                font-family: map-get($font, family);
+                font-weight: $weight;
+                font-style: $style;
+                @if map-has-key(map-get($font, filetype), "eot") {
+                    src: url(#{$file}.eot);
+                }
+                src: $all-srcs;
+            }
+        }
+    }
+}
