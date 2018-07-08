@@ -2,7 +2,7 @@
  * Themes
  */
 
-body, .light {
+body, .white {
     @include theme(
         $background-color: $white,
         $text-color: $black,
@@ -10,7 +10,7 @@ body, .light {
     );
 }
 
-.dark {
+.black {
     @include theme(
         $background-color: $black,
         $text-color: $white,
