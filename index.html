@@ -10,5 +10,8 @@ layout: default
   <div class="content-wrapper padding-l">
     <h1>{{ site.title }}</h1>
     {{ site.description | markdownify }}
+
+    {% capture cta %}{% include cta.md %}{% endcapture %}
+    {{ cta | markdownify }}
   </div>
 </div>
