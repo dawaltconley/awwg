@@ -14,6 +14,7 @@ body, .white {
     @include theme(
         $background-color: $black,
         $text-color: $white,
+        $brand-color: $red,
     );
 }
 
