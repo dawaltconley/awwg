@@ -13,7 +13,7 @@
   {% if page.excerpt %}
     {% assign description = page.excerpt %}
   {% else %}
-    {% assign description = site.description %}
+    {% capture description %}{% include description.md %}{% endcapture %}
   {% endif %}
   {% assign description = description | markdownify | strip_html | strip_newlines | truncate: 160 %}
 

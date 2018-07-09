@@ -1,20 +1,6 @@
 # Global Variables
 
 title: NYC-DSA Anti-War Working Group
-description: |
-  The Anti-War Working Group coordinates the efforts the 
-  [New York City](http://www.socialists.nyc/) branch of the 
-  [Democratic Socialists of America](https://www.dsausa.org/), 
-  the largest socialist organization in the United States.
-  
-  We are dedicated to countering US imperialism and resisting 
-  US regime-change operations and interventions in foreign wars 
-  and conflicts. Our goal is to disrupt the US war machine in 
-  New York City by building grassroots power and working with 
-  other anti-war groups. Our struggle will advance the fight 
-  for a truly international socialism, in which all people, 
-  regardless of nationality, are liberated from want, fear, 
-  violence, and coercion.
 keywords: # a YAML list. optional; only used by some older search engines.
 baseurl: # for hosting at a subdomain
 url: https://antiwar.netlify.com/ # full url of main site
