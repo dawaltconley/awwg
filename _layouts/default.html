@@ -1,3 +1,15 @@
+{% capture blank %}
+  {% if page.header %}
+    {% assign header = page.header %}
+  {% elsif layout.header %}
+    {% assign header = layout.header %}
+  {% elsif page.collection.header %}
+    {% assign header = page.collection.header %}
+  {% else %}
+    {% assign header = false %}
+  {% endif %}
+{% endcapture %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +20,10 @@
     {% if page.parallax or page.collection.parallax %}
     <div class="parallax-page">
     {% endif %}
+
+      {% if header %}
+        {% include header.html %}
+      {% endif %}
 
       {{ content }}
 
