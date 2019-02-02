@@ -1,8 +1,7 @@
 ---
 layout: page
+title: No Way To Treat A Child Campaign
 ---
-
-# No Way To Treat A Child Campaign
 
 ## Issue
 
