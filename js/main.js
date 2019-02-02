@@ -1,6 +1,8 @@
 ---
 ---
 
+"use strict";
+
 {% unless jekyll.environment == "development" %}
 (function () {
 {% endunless %}
@@ -13,8 +15,8 @@
         win = window;
     }
 
-    jekyllEnv = "{{ jekyll.environment }}";
-    hasGoogleAnalytics = "{{ site.google_analytics }}";
+    var jekyllEnv = "{{ jekyll.environment }}";
+    var hasGoogleAnalytics = "{{ site.google_analytics }}";
 
 /*
  * General-purpose functions
@@ -25,7 +27,7 @@
     };
 
     function getScrollableParent(element) {
-        var maxDepth = arguments.length > 2 && arguments[1] !== undefined ? arguments[1] : undefined;
+        var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
         var ancestor = element;
         while (ancestor != document.documentElement && maxDepth !== 0) {
             ancestor = ancestor.parentElement;
@@ -83,62 +85,38 @@
         return elementBottom - viewBottom;
     };
 
+    function getRelativeClientRect(child, parent) {
+        var cRect = child.getBoundingClientRect();
+        var pRect = parent.getBoundingClientRect();
+        var rRect = {
+            top: cRect.top - pRect.top,
+            bottom: cRect.bottom - pRect.top,
+            left: cRect.left - pRect.left,
+            right: cRect.right - pRect.left
+        }
+        if (parent.offsetHeight != parent.scrollHeight) {
+            rRect.top = rRect.top + parent.scrollTop;
+            rRect.bottom = rRect.bottom + parent.scrollTop;
+            rRect.left = rRect.left + parent.scrollLeft;
+            rRect.right = rRect.right + parent.scrollLeft;
+        }
+        return rRect;
+    }
+
     function pagePos(element) {
-        var posTop = element.getBoundingClientRect().top + page.scrollTop;
-        var posLeft = element.getBoundingClientRect().left + page.scrollLeft;
-        return { top: posTop, left: posLeft };
-    };
+        return getRelativeClientRect(element, page);
+    }
 
-    function getParentBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        var ancestor = element;
-        while (ancestor != document.documentElement && maxDepth !== 0) {
-            ancestor = ancestor.parentElement;
-            if (Sizzle.matchesSelector(ancestor, selector)) {
-                return ancestor;
-            }
-            maxDepth -= 1;
+    function updateDescendentIds(element, string) {
+        var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "suffix";
+        var maxDepth = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+        if (element.id && position == "suffix") {
+            element.id = element.id + string;
+        } else if (element.id && position == "prefix") {
+            element.id = string + element.id;
         }
-        return null;
-    };
-
-    function getChildBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        for (var i = 0; i < element.children.length; i++) {
-            var child = element.children[i];
-            if (Sizzle.matchesSelector(child, selector)) {
-                return child;
-            } else if (child.children.length && maxDepth !== 1) {
-                var childMatch = getChildBySelector(child, selector, maxDepth - 1);
-                if (childMatch) {
-                    return childMatch;
-                }
-            }
-        }
-        return null;
-    };
-
-    function getChildrenBySelector(element, selector) {
-        var maxDepth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-        var matches = [];
-        for (var i = 0; i < element.children.length; i++) {
-            var child = element.children[i];
-            if (Sizzle.matchesSelector(child, selector)) {
-                matches.push(child);
-            }
-            if (child.children.length && maxDepth !== 1) {
-                var childMatch = getChildrenBySelector(child, selector, maxDepth - 1);
-                if (childMatch) {
-                    childMatch.forEach(function (match) {
-                        matches.push(match);
-                    });
-                }
-            }
-        }
-        if (matches.length) {
-            return matches;
-        } else {
-            return null;
+        for (var i = 0; i < element.children.length && maxDepth !== 0; i++) {
+            updateDescendentIds(element.children[i], string, position, maxDepth - 1);
         }
     };
 
@@ -207,6 +185,10 @@
         }, time);
     };
 
+    function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
     function parseBoolean(string) {
         if (string == "true") {
             return true;
@@ -219,16 +201,77 @@
         return Math.floor(element.getBoundingClientRect().bottom - window.innerHeight);
     };
 
+    function onScroll(direction, callback) {
+        var scroller = arguments.length > 2 && arguments[2] != undefined ? arguments[2] : win;
+        var oldPos = page.scrollTop;
+        var removeListener = scroller.removeEventListener.bind(scroller, "scroll", scrolling, passive);
+
+        function scrolling() {
+            var newPos = page.scrollTop;
+            if ((newPos < oldPos && direction == "up") || (newPos > oldPos && direction == "down")) {
+                removeListener();
+                callback();
+            }
+            oldPos = newPos;
+        }
+
+        scroller.addEventListener("scroll", scrolling, passive);
+        return removeListener;
+    }
+
+    var onScrollUp = onScroll.bind(null, "up");
+    var onScrollDown = onScroll.bind(null, "down");
+
+    function updateObj(obj, newObj) {
+        for (var key in newObj) {
+            obj[key] = newObj[key];
+        }
+    }
+
+/*
+ * DOM Manipulation
+ */
+
+    var shuffleChildren = toArray(document.querySelectorAll("[data-shuffle-children]"));
+    shuffleChildren.forEach(function (e) {
+        var shuffled = e.cloneNode(false);
+        var children = toArray(e.children);
+        while (children.length > 0) {
+            var i = Math.floor(Math.random() * children.length);
+            shuffled.appendChild(children.splice(i, 1)[0]);
+        }
+        e.parentNode.replaceChild(shuffled, e);
+    });
+
+    var now = new Date();
+    var currentYear = now.getFullYear().toString();
+    var yearsToUpdate = toArray(document.querySelectorAll("[data-current-year]"));
+    yearsToUpdate.forEach(function (y) {
+        y.innerText = currentYear;
+    });
+
+/*
+ * Classes
+ */
+
+    var classRemoveElements = toArray(document.querySelectorAll("[data-class-rm]"));
+
+    classRemoveElements.forEach(function (element) {
+        var rmClasses = element.getAttribute("data-class-rm").split(" ");
+        for (var i=0; i < rmClasses.length; i++) {
+            element.classList.remove(rmClasses[i]);
+        }
+    });
+
 /*
  * Scrolling
  */
 
     var pageScrollBehavior = window.getComputedStyle(page).getPropertyValue("scroll-behavior");
-    var smoothLinks = [];
-
-    toArray(document.querySelectorAll("[data-smooth-scroll]")).forEach(function (element) {
-        smoothLinks.push(new SmoothLink(element));
-    });
+    var smoothLinks = toArray(document.querySelectorAll("[data-smooth-scroll]"));
+    for(var i = 0; i < smoothLinks.length; i++) {
+        smoothLinks[i] = new SmoothLink(smoothLinks[i]);
+    }
 
     zenscroll.setup(500, 0);
 
@@ -252,6 +295,269 @@
         }
         return false;
     };
+
+/*
+ * Fixed Headers
+ */
+
+    function FixedHeader(header) {
+        var e = header.cloneNode(true);
+        this.element = e;
+        this.headerRef = header;
+        this.pos = page.scrollTop;
+        this.refPos = pagePos(header);
+
+        this.resize();
+        updateObj(this.element.style, { position: "fixed", top: -this.height.toString() + "px", zIndex: "999", display: "none" });
+        updateDescendentIds(e, "-fixed");
+        document.body.insertBefore(this.element, document.body.firstChild);
+    }
+
+    FixedHeader.prototype.scroll = function () {
+        var f = this;
+        var e = this.element;
+        var pos = page.scrollTop;
+        var scrollDiff = pos - f.pos;
+        window.clearTimeout(f.doneScrolling);
+        if ((e.style.display != "none" && pos > f.refPos.top) || (e.style.display == "none" && pos > f.refPos.bottom)) {
+            e.style.display = "";
+            f.interruptSlideDown = true;
+            var top = parseInt(e.style.top);
+            if ((scrollDiff < 0 && top < 0) || (scrollDiff > 0 && top > -f.height)){
+                top = Math.min(Math.max(top - scrollDiff, -f.height), 0);
+                e.style.top = top.toString() + "px";
+                f.setShadow();
+                f.doneScrolling = window.setTimeout(function () {
+                    f.interruptSlideDown = false;
+                    requestAnimationFrame(f.slideDown.bind(f))
+                }, 500);
+            }
+        } else if (e.style.display != "none") {
+            e.style.display = "none";
+            updateObj(e.style, { display: "none", top: -f.height.toString() + "px" });
+            f.setShadow();
+        }
+        f.pos = pos;
+    }
+
+    FixedHeader.prototype.resize = function () {
+        window.clearTimeout(this.doneResizing);
+        win.removeEventListener("scroll", this.scrollListener, passive);
+        this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
+        this.refPos = pagePos(this.headerRef);
+        this.height = this.headerRef.clientHeight;
+        updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
+    }
+
+    FixedHeader.prototype.slideDown = function () {
+        if (this.interruptSlideDown) { return null; }
+        var t = parseInt(this.element.style.top);
+        if (t < 0) {
+            var dist = Math.max(-t/5, 1);
+            this.element.style.top = (t + dist).toString() + "px";
+            requestAnimationFrame(this.slideDown.bind(this));
+        }
+        this.setShadow();
+    }
+
+    FixedHeader.prototype.setShadow = function () {
+        var b = Math.max(this.element.getBoundingClientRect().bottom, 0);
+        this.element.style.boxShadow = "0 " + (b/32).toString() + "px " + (b/16).toString() + "px 0 rgba(0, 0, 0, 0.2)";
+    }
+
+    FixedHeader.prototype.addListeners = function () {
+        this.scrollListener = this.scroll.bind(this);
+        win.addEventListener("scroll", this.scrollListener, passive);
+        window.addEventListener("resize", this.resize.bind(this), passive);
+    }
+
+    var fixedHeader = document.querySelector("[data-fixed-header]");
+
+    if (fixedHeader) {
+        fixedHeader = new FixedHeader(fixedHeader);
+    }
+
+/*
+ * Collapsible Menus
+ */
+
+    var collapsibleMenus = toArray(document.querySelectorAll("[data-menu]"));
+    for (var i = 0; i < collapsibleMenus.length; i++) {
+        collapsibleMenus[i] = new CollapsibleMenu(collapsibleMenus[i]);
+        if (fixedHeader && collapsibleMenus[i].element === fixedHeader.element) {
+            fixedHeader.menu = collapsibleMenus[i];
+        }
+    }
+
+    function CollapsibleMenu(element) {
+        this.element = element;
+        this.buttons = {
+            "open" : toArray(element.querySelectorAll('[data-menu-button="open"]')),
+            "close" : toArray(element.querySelectorAll('[data-menu-button="close"]')),
+            "toggle" : toArray(element.querySelectorAll('[data-menu-button="toggle"],[data-menu-button=""]'))
+        };
+        this.links = element.querySelector('[data-menu-links]');
+        this.state = "closed";
+    };
+
+    collapsibleMenus.forEach(function (menu) {
+        menu.buttons.open.forEach(function (button) {
+            if (button.hash && location.hash == button.hash) {
+                location.href = location.href.replace(/#.*$/, "");
+            }
+        });
+    });
+
+    CollapsibleMenu.prototype.open = function () {
+        this.links.style.maxHeight = this.links.scrollHeight.toString() + "px";
+        this.buttons.open.forEach(function (button) {
+            button.classList.add("hidden");
+        });
+        this.buttons.close.forEach(function (button) {
+            button.classList.remove("hidden");
+        });
+        this.state = "open";
+        this.removeListener = onScrollDown(this.close.bind(this));
+    };
+
+    CollapsibleMenu.prototype.close = function () {
+        this.links.style.maxHeight = "";
+        this.buttons.close.forEach(function (button) {
+            button.classList.add("hidden");
+        });
+        this.buttons.open.forEach(function (button) {
+            button.classList.remove("hidden");
+        });
+        this.state = "closed";
+        this.removeListener();
+    };
+
+    CollapsibleMenu.prototype.toggle = function () {
+        if (this.state == "closed") {
+            this.open();
+        } else if (this.state == "open") {
+            this.close();
+        }
+    };
+
+    CollapsibleMenu.prototype.addListeners = function () {
+        this.links.style.overflow = "hidden";
+        for (var method in this.buttons) {
+            if (this.buttons[method]) {
+                this.buttons[method].forEach(function (button) {
+                    button.classList.remove("target-hide", "target-display");
+                    button.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        this[method]();
+                    }.bind(this));
+                }.bind(this));
+            }
+        }
+    }
+
+/*
+ * Background Image Testing
+ */
+
+    var bgTestingObjects = toArray(document.querySelectorAll("[data-background-images]"));
+    for (var i = 0; i < bgTestingObjects.length; i++) {
+        bgTestingObjects[i] = new BgSelect(bgTestingObjects[i]);
+    }
+
+    function BgSelect(element) {
+        var menuContainer = element;
+        var computedStyle = window.getComputedStyle(element);
+        var position = computedStyle.getPropertyValue("position");
+        var initialImage = {"name": "initial"};
+
+        if (element.tagName == "IMG") { // use element.src?
+            initialImage.path = element.src;
+            initialImage.size = computedStyle.getPropertyValue("object-fit") == "contain" ? "contain" : "cover";
+            initialImage.position = computedStyle.getPropertyValue("object-position");
+
+            var divImg = document.createElement("div");
+            divImg.setAttribute("data-background-images", element.getAttribute("data-background-images"));
+            divImg.classList = element.classList;
+            divImg.classList.add("bg-img");
+            updateObj(divImg.style, { backgroundImage: "url('" + initialImage.path + "')", backgroundSize: initialImage.size, backgroundPosition: initialImage.position });
+            menuContainer = divImg;
+
+            function replaceImgWithDiv(img, replacement) {
+                updateObj(replacement.style, { width: img.width + "px", height: img.height + "px" });
+                img.parentNode.replaceChild(replacement, img);
+            }
+
+            if (element.complete) {
+                replaceImgWithDiv(element, divImg);
+            } else {
+                element.onload = replaceImgWithDiv.bind(null, element, divImg);
+            }
+
+            element = divImg;
+        } else {
+            initialImage.path = computedStyle.getPropertyValue("background-image").replace(/.*\s?url\([\'\"]?/, '').replace(/[\'\"]?\).*/, '');
+            initialImage.size = computedStyle.getPropertyValue("background-size");
+            initialImage.position = computedStyle.getPropertyValue("background-position");
+        }
+
+        if (position == "static" ) {
+            element.style.position = "relative";
+        } else if (position == "absolute") {
+            menuContainer = element.parentElement;
+        }
+
+        this.element = element;
+        this.controls = document.createElement("div");
+        updateObj(this.controls.style, { position: "absolute", bottom: "0", left: "0", zIndex: "999" });
+        this.menu = document.createElement("select");
+        this.slider = document.createElement("input");
+        this.slider.type = "range";
+        this.slider.value = "50";
+
+        this.images = JSON.parse(element.getAttribute("data-background-images"));
+        this.images.unshift(initialImage);
+
+        for (var i=0; i < this.images.length; i++) {
+            var image = this.images[i];
+            var imageName = image["name"] ? image["name"] : "image " + i;
+            var opt = document.createElement("option");
+            opt.textContent = imageName;
+            this.menu.appendChild(opt);
+        }
+
+        this.controls.appendChild(this.menu);
+        this.controls.appendChild(this.slider);
+        menuContainer.appendChild(this.controls);
+    }
+
+    BgSelect.prototype.setBg = function (trigger) {
+        var image = this.images[this.menu.selectedIndex];
+        var imagePath = image["path"] ? image["path"] : image;
+        if (trigger == "menu" && image["slider"]) { this.slider.value = image["slider"]; }
+        var lightness = ((Number(this.slider.value) - 50) / 50).toString();
+
+        if (lightness >= 0) {
+            this.element.style.backgroundImage = "linear-gradient(rgba(255, 255, 255, " + lightness + "), rgba(255, 255, 255, " + lightness + ")), url('" + imagePath + "')";
+            console.log("image: %s\nlightness: %s\nslider: %s", imagePath, lightness, Number(this.slider.value));
+        } else {
+            var darkness = Math.abs(lightness);
+            this.element.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ")), url('" + imagePath + "')";
+            console.log("image: %s\ndarkness: %s\nslider: %s", imagePath, darkness, Number(this.slider.value));
+        }
+
+        image["size"] ? this.element.style.backgroundSize = image["size"] : this.element.style.backgroundSize = null;
+        image["position"] ? this.element.style.backgroundPosition = image["position"] : this.element.style.backgroundPosition = null;
+    }
+
+    bgTestingObjects.forEach(function (obj) {
+        obj.element.removeAttribute("data-background-images");
+        obj.menu.onchange = obj.setBg.bind(obj, "menu");
+        obj.slider.onchange = obj.setBg.bind(obj);
+        obj.slider.ondblclick = function () {
+            obj.slider.value = 50;
+            obj.setBg();
+        }
+    });
 
 /*
  * Fullscreen
@@ -282,17 +588,17 @@
  * Analytics
  */
 
-    analyticsObjects = [];
-
-    toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]")).forEach(function (element) {
-        analyticsObjects.push(new AnalyticsEventObj(element));
-    });
+    var analyticsObjects = toArray(document.querySelectorAll("[data-analytics-category][data-analytics-action][data-analytics-label]"));
+    for (var i = 0; i < analyticsObjects.length; i++) {
+        analyticsObjects[i] = new AnalyticsEventObj(analyticsObjects[i]);
+    }
 
     function AnalyticsEventObj(element) {
         this.element = element;
         this.category = element.getAttribute("data-analytics-category");
         this.action = element.getAttribute("data-analytics-action");
         this.label = element.getAttribute("data-analytics-label");
+        this.new_tab = element.getAttribute("target") == "_blank";
     };
 
     if (jekyllEnv == 'production') {
@@ -319,12 +625,12 @@
             this.element.addEventListener("click", this.listener);
         } else if (this.action == "view") {
             this.listener = scrollToViewEventListener.bind(null, this);
-            window.addEventListener("scroll", this.listener, passive);
+            win.addEventListener("scroll", this.listener, passive);
         }
     };
 
     function linkClickEventListener(eventObj, event) {
-        if (document.origin == eventObj.element.origin) {
+        if (window.origin == eventObj.element.origin || eventObj.new_tab) {
             eventObj.send();
         } else {
             event.preventDefault();
@@ -343,7 +649,7 @@
     function scrollToViewEventListener(eventObj) {
         if (distToBottom(eventObj.element) <= 0) {
             eventObj.send();
-            window.removeEventListener("scroll", eventObj.listener, passive);
+            win.removeEventListener("scroll", eventObj.listener, passive);
         }
     };
 
@@ -375,6 +681,12 @@
 
         window.addEventListener("test", null, options);
     } catch (err) {}
+
+    function addCollapsibleMenuListeners() {
+        collapsibleMenus.forEach(function (menu) {
+            menu.addListeners();
+        });
+    }
 
     function addSmoothScrollListeners() {
         smoothLinks.forEach(function (link) {
@@ -417,6 +729,8 @@
     };
 
     objectFitImages();
+    if (fixedHeader) { fixedHeader.addListeners(); }
+    addCollapsibleMenuListeners();
 
     if (smoothLinks.length > 0 && pageScrollBehavior != "smooth") {
         addSmoothScrollListeners();
@@ -433,7 +747,15 @@
 
     if (analyticsObjects.length > 0 && hasGoogleAnalytics) {
         analyticsObjects.forEach(function (object) {
-            object.addListener();
+            if (object.action == "view") {
+                window.addEventListener("load", function () {
+                    if (distToBottom(object.element) > 0) {
+                        object.addListener();
+                    }
+                });
+            } else {
+                object.addListener();
+            }
         });
     }
 

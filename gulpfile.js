@@ -17,14 +17,10 @@ var fs = require("fs");
  * Jekyll
  */
 
-let jekyllEnv = "gulp";
-
-if (process.env.CONTEXT == "production") {
-    jekyllEnv = "production";
-}
+const jekyllEnv = process.env.CONTEXT == "production" ? "production" : "gulp";
 
 function jekyllBuild(env = "development") {
-    var cmd = "JEKYLL_ENV=" + env + " jekyll build";
+    var cmd = "JEKYLL_ENV=" + env + " bundle exec jekyll build";
     return child.exec(cmd, { stdio: "inherit" });
 }
 
@@ -91,6 +87,67 @@ gulp.task("js", gulp.series("js-concat", "js-clean", "js-uglify"));
  * Images
  */
 
+function ImageType(name, dir) {
+    this.name = name;
+    this.dir = dir;
+
+    var cleanTaskName = name + "-clean";
+    gulp.task(cleanTaskName, function (cb) {
+        pump([
+            gulp.src(dir + "/responsive/*"), 
+            clean(),
+            gulp.dest(dir)
+        ], cb);
+    });
+    this.tasks = [cleanTaskName];
+}
+
+ImageType.prototype.newTask = function (settings, suffix) {
+    var taskName = this.name + suffix;
+    var dir = this.dir;
+    gulp.task(taskName, function (cb) {
+        pump([
+            gulp.src([
+                dir + "/*",
+                "!" + dir + "/responsive"
+            ]),
+            imageResize(settings),
+            rename({ suffix: suffix }),
+            gulp.dest(dir + "/responsive")
+        ], cb)
+    });
+    this.tasks.splice(-1, 0, taskName); // add second to last in task list; before the cleaning task
+}
+
+var pictures = new ImageType("pictures", "./_site/assets/gulp-pictures/");
+var srcset = new ImageType("srcset", "./_site/assets/gulp-srcset/");
+var backgrounds = new ImageType("backgrounds", "./_site/assets/gulp-backgrounds/");
+
+var imageSizes = YAML.safeLoad(fs.readFileSync("_data/devices.yml", "utf8"));
+imageSizes["dp"].forEach(function (bp) {
+    imageSizes["dppx"].forEach(function (d) {
+        srcset.newTask({
+            width: bp.x * d,
+            filter: "Catrom"
+        }, "-" + Math.round(bp.x * d) + "w");
+
+        pictures.newTask({
+            width: bp.x * d,
+            height: bp.y * d,
+            filter: "Catrom"
+        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+
+        backgrounds.newTask({
+            width: (bp.x * d),
+            height: (bp.y * d),
+            cover: true,
+            upscale: false,
+            filter: "Catrom",
+            interlace: jekyllEnv == "production" ? true : false
+        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+    });
+});
+
 gulp.task("image-min", function (cb) {
     pump([
         gulp.src([
@@ -103,73 +160,15 @@ gulp.task("image-min", function (cb) {
     ], cb);
 });
 
-var imageBreakpoints = YAML.safeLoad(fs.readFileSync("_config.yml", "utf8"))["image_bp"];
+gulp.task("pictures", gulp.series(pictures.tasks));
 
-gulp.task("responsive-images", function () {
-    var src = "./_site/assets/gulp-images/*";
-    var dest = "./_site/assets/gulp-images";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    height: bp.y,
-                    filter: "Catrom",
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
+gulp.task("srcset", gulp.series(srcset.tasks));
 
-gulp.task("srcset-images", function () {
-    var src = "./_site/assets/gulp-srcset/*";
-    var dest = "./_site/assets/gulp-srcset";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    filter: "Catrom",
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "w" }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
-
-gulp.task("bg-images", function () {
-    var src = "./_site/assets/gulp-backgrounds/*";
-    var dest = "./_site/assets/gulp-backgrounds";
-    var merged = merge();
-    imageBreakpoints.forEach(function (bp) {
-        var stream = gulp.src(src)
-            .pipe(
-                imageResize({
-                    width: bp.x,
-                    height: bp.y,
-                    cover: true,
-                    upscale: false,
-                    filter: "Catrom",
-                    interlace: true
-                })
-            )
-            .pipe(rename({ suffix: "-" + bp.x + "x" + bp.y }))
-            .pipe(gulp.dest(dest));
-        merged.add(stream);
-    });
-    return merged.isEmpty() ? null : merged;
-});
+gulp.task("backgrounds", gulp.series(backgrounds.tasks));
 
 gulp.task("images", gulp.series(
     "image-min",
-    gulp.parallel("responsive-images", "srcset-images", "bg-images")
+    gulp.parallel("pictures", "srcset", "backgrounds")
 ));
 
 /*

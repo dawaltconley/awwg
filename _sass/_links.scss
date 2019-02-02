@@ -1,0 +1,36 @@
+/*
+ * Links
+ */
+
+.subtle-link {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.subtle-icon {
+    @extend .subtle-link;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.button, .button-o, {
+    @extend %vertical-rhythm, .inline-block, .font-smoothing-normal, .subtle-icon;
+    padding: .5em 1em;
+    text-align: center;
+    text-shadow: none;
+    border-radius: 7px;
+    transition-duration: map-get($transitions, default);
+    transition-property: color, background-color;
+}
+
+.button-o, {
+    $border-width: 1px;
+    padding: calc(.5em - #{$border-width}) calc(1em - #{$border-width});
+    border-width: $border-width;
+    border-style: solid;
+}

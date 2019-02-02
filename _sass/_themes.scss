@@ -2,26 +2,48 @@
  * Themes
  */
 
-body, .white {
-    @include theme(
-        $background-color: $white,
-        $text-color: $black,
-        $brand-color: $red,
+@each $theme, $settings in $themes {
+    $i: index($themes, ($theme $settings));
+    $selectors: ".#{$theme}";
+
+    @if $i == 1 { // make first theme in map default
+        $selectors: append("body", $selectors, "comma");
+    }
+
+    @each $other-theme in map-keys($themes) { // set theme depth
+        @if $other-theme != $theme {
+            $ancestry: ();
+            $new-ancestry: ();
+            @for $d from 0 to $theme-depth {
+                $new-ancestry: append($new-ancestry, ".#{$other-theme} .#{$theme}", "space");
+                $ancestry: append($ancestry, $new-ancestry, "comma");
+            }
+            $selectors: append($selectors, $ancestry, "comma");
+        }
+    }
+
+    #{$selectors} { // assign theme styles to resulting selector list
+        @include theme(
+            $background-color: map-get($settings, background-color),
+            $text-color: map-get($settings, text-color),
+            $brand-color: map-get($settings, brand-color),
+        );
+    }
+
+    $accessibility: "AA";
+    @if map-has-key($settings, accessibility) {
+        $accessibility: map-get($settings, accessibility);
+    }
+
+    @include accessibility(
+        $name: $theme,
+        $background-color: map-get($settings, background-color),
+        $text-color: map-get($settings, text-color),
+        $brand-color: map-get($settings, brand-color),
+        $accessibility: $accessibility,
     );
 }
 
-.black {
-    @include theme(
-        $background-color: $black,
-        $text-color: $white,
-        $brand-color: $red,
-    );
-}
-
-.red {
-    @include theme(
-        $background-color: $red,
-        $text-color: $white,
-        $brand-color: $black,
-    );
+.no-bg {
+    background-color: transparent !important;
 }

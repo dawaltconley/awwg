@@ -12,32 +12,7 @@ auto_scroll: false # enables smooth scrolling for all same-page links using zens
 native_scroll: false # enables smooth scrolling by the scroll-behavior property, for all browsers that support it
 bg_testing: false # turn on to enable the bg-testing.html include
 emptyArray: [] # variable for easy array creation
-
 logo: /assets/logos/dsa_anti-war_white_transparent.png
-
-image_bp: # breakpoints used for creating responsive images
-  - x: 2880
-    y: 1800
-  - x: 2560
-    y: 1600
-  - x: 2160
-    y: 1440
-  - x: 1920
-    y: 1200
-  - x: 1400
-    y: 900
-  - x: 1280
-    y: 800
-  - x: 1024
-    y: 768
-  - x: 960
-    y: 640
-  - x: 800
-    y: 480
-  - x: 640
-    y: 360
-  - x: 480
-    y: 320
 
 # Build settings
 
@@ -64,6 +39,7 @@ prose:
     - "*.json"
     - "*.jsonp"
     - "*.rb"
+    - "*.sh"
     - "_layouts"
     - "_sass"
     - "_site"
@@ -76,5 +52,6 @@ prose:
     - "README.md"
     - ".*rc"
     - ".ruby-version"
+    - ".nvmrc"
     - ".gitignore"
     - "Gemfile*"

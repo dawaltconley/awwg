@@ -1,3 +1,41 @@
+@mixin mq($breakpoints: $bp, $queries: (lt: max, gt: min)) {
+    @if type-of(nth($breakpoints, 1)) == "string" {
+        $new-breakpoints: ();
+        @for $i from 1 through length($breakpoints) {
+            $name: nth($breakpoints, $i);
+            @if map-has-key($bp, $name) {
+                $new-breakpoints: map-merge($new-breakpoints, ($name: map-get($bp, $name)));
+            } @else {
+                @warn "No value in $bp corresponding to breakpoint name '#{$name}', skipping.";
+            }
+        }
+        $breakpoints: $new-breakpoints;
+    }
+    @each $prefix, $query in $queries {
+        $sorted-bp: map-sort-units($breakpoints, $order: px em);
+        @for $i from 1 through length($sorted-bp) {
+            $unit-set: map-sort(nth($sorted-bp, $i));
+            @if $query == "max" {
+                $unit-set: map-reverse($unit-set);
+            }
+            $sorted-bp: set-nth($sorted-bp, $i, $unit-set);
+        }
+        $sorted-bp: merge-all($sorted-bp);
+
+        @each $name, $breakpoint in $sorted-bp {
+            @if ($query == "min") and (index('px', unit($breakpoint))) {
+                $breakpoint: $breakpoint + 1;
+            }
+
+            &-#{$prefix}-#{$name} {
+                @media screen and (#{$query}-width: $breakpoint) {
+                    @content;
+                }
+            }
+        }
+    }
+}
+
 @mixin display($display) {
     display: $display;
 
@@ -8,22 +46,14 @@
     }
 
     &.target-display {
-        &:target {
+        @include target {
             display: $display;
         }
     }
 
-    @each $name, $breakpoint in $bp {
-        &.show-lt-#{$name} {
-            @media screen and (max-width: $breakpoint) {
-                display: $display;
-            }
-        }
-
-        &.show-gt-#{$name} {
-            @media screen and (min-width: $breakpoint + 1) {
-                display: $display;
-            }
+    &.show {
+        @include mq {
+            display: $display;
         }
     }
 }
@@ -61,12 +91,11 @@
     }
 }
 
-@mixin inline-columns($columns, $spacing: 0) {
-    @if not($columns > 1) { @error "inline-columns mixin must have more than one column." }
+@mixin columns ($columns, $spacing: 0px) {
+    @if not($columns > 1) { @error "columns mixin must have more than one column." }
     $width: 100% / $columns;
     $row-end: $columns + "n";
-    display: inline-block;
-    width: calc(#{$width} - (#{$spacing} * (#{$columns} - 1) / #{$columns}));
+    width: calc(#{$width} - #{($spacing * ($columns - 1) / $columns)});
     margin-right: $spacing;
     margin-bottom: $spacing;
 
@@ -84,6 +113,12 @@
 // with class "hover" (either same element or a parent) is hovered
 @mixin hover($hover-class: "hover") {
     &.#{$hover-class}:hover, .#{$hover-class}:hover & {
+        @content;
+    }
+}
+
+@mixin target($target-class: "target") {
+    &.#{$target-class}:target, .#{$target-class}:target & {
         @content
     }
 }

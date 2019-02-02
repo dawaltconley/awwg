@@ -25,6 +25,16 @@
     text-shadow: $full-shadow;
 }
 
+.font-smoothing-normal {
+    -webkit-font-smoothing: subpixel-antialiased !important;
+    -moz-osx-font-smoothing: auto !important;
+}
+
+.font-smoothing-dark {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
 /*
  * Text
  */
@@ -75,16 +85,6 @@
     text-transform: capitalize;
 }
 
-.font-smoothing-normal {
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-}
-
-.font-smoothing-dark {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
 .avoid-wrap {
     white-space: nowrap;
 
@@ -101,24 +101,4 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-}
-
-/*
- * Links
- */
-
-.subtle-link {
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
-.subtle-icon {
-    @extend .subtle-link;
-
-    &:hover {
-        text-decoration: none;
-    }
 }

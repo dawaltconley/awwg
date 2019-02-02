@@ -2,22 +2,6 @@
  * Basic
  */
 
-.block {
-    @include display(block);
-}
-
-.inline {
-    @include display(inline);
-}
-
-.inline-block {
-    @include display(inline-block);
-}
-
-.hidden {
-    display: none;
-}
-
 .relative {
     position: relative;
 }
@@ -201,9 +185,9 @@
 @each $name, $styles in $borders {
     .border-#{$name} {
         @include all-sides {
-            @each $rule, $value in $styles {
-                border-#{$side}-#{$rule}: $value;
-            }
+            border-#{$side}-width: map-get($styles, width);
+            border-#{$side}-style: map-get($styles, style);
+            border-#{$side}-color: map-get($styles, color) !important;
         }
     }
 }

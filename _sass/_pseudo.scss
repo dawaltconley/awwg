@@ -83,7 +83,22 @@
 .target-display {
     display: none;
 
-    &:target {
+    @include target {
         display: initial;
+    }
+}
+
+.target-hide {
+    @include target {
+        display: none;
+    }
+}
+
+.target-max-height-expand {
+    transition-property: max-height;
+    transition-timing-function: ease-out;
+
+    @include target {
+        max-height: 100vw;
     }
 }

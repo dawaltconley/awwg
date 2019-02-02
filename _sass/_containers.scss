@@ -10,6 +10,17 @@
     overflow: hidden;
 }
 
+.overflow-a {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+%fill {
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .fill-window {
     @extend .fixed, .pos-0;
 }
