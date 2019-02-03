@@ -1,10 +1,12 @@
-<header class="dark relative full-width header-height wrapper-padding padding-0-lt-header z-9" data-menu data-fixed-header>
+<header class="red relative full-width header-height wrapper-padding padding-0-lt-header z-9" data-menu data-fixed-header>
 
   <nav id="site-nav" class="full-size target clearfix">
     <div class="float-left float-none-lt-header full-width-lt-header full-height wrapper-padding padding-0-gt-header">
-      <a class="float-left block full-height padding-xxs-v fill-color-theme-text" href="{{ site.baseurl }}/">
-        {% include acme-logos/logo-8.svg class="full-height" %}
-      </a>
+      {% unless include.center %}
+        <a class="float-left block full-height padding-xxs-v fill-color-theme-text" href="{{ site.baseurl }}/">
+          <img class="full-height" src="{{ site.logo }}" alt="DSA Anti-War">
+        </a>
+      {% endunless %}
 
       <div class="hide-gt-header table float-right full-height font-smoothing-normal">
         <a href="#site-nav" class="target-hide cell v-center subtle-icon" data-menu-button="open">
@@ -16,7 +18,7 @@
       </div>
     </div>
 
-    <div class="table float-right float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a show-gt-header clearfix t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="table {% unless include.center %} float-right {% else %} margin-auto-h {% endunless %} float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a show-gt-header clearfix t-default t-long" data-menu-links data-class-rm="t-long">
       {% for my_page in site.pages %}
         {% if my_page.title %}
           <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>{{ my_page.title }}</a>
