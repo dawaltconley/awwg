@@ -12,7 +12,9 @@ auto_scroll: false # enables smooth scrolling for all same-page links using zens
 native_scroll: false # enables smooth scrolling by the scroll-behavior property, for all browsers that support it
 bg_testing: false # turn on to enable the bg-testing.html include
 emptyArray: [] # variable for easy array creation
-logo: /assets/logos/dsa_anti-war_white_transparent.png
+logo:
+  text: /assets/logos/dsa_anti-war_white_transparent.png
+  basic: /assets/logos/dsa_anti-war_white_transparent_basic.png
 
 # Build settings
 
