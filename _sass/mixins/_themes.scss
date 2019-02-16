@@ -11,9 +11,9 @@
 
 @function darken-bg($primary, $secondary, $tertiary: null) {
     @if $tertiary {
-        @return mix(mix($primary, $tertiary, 85%), $secondary, 16%);
+        @return mix(mix($primary, $tertiary, 85%), $secondary, 20%);
     } @else {
-        @return mix($primary, $secondary, 16%);
+        @return mix($primary, $secondary, 20%);
     }
 }
 
