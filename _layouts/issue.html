@@ -1,0 +1,24 @@
+---
+layout: basic
+---
+
+{% include header.html %}
+
+<article class="text-wrapper margin-auto-h padding-l-v wrapper-padding">
+
+  <h1>{{ page.title }}</h1>
+
+  {{ content }}
+
+  {% for campaign_title in page.campaigns %}
+    {% for campaign in site.campaigns %}
+      {% if campaign.title == campaign_title %}
+        <h2><a href="{{ campaign.full_page }}">
+          {{ campaign.title }}
+        </a></h2>
+        {{ campaign.excerpt }}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+</article>

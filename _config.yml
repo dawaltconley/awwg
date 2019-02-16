@@ -19,6 +19,12 @@ logo:
   # white: /assets/logos/dsa_anti-war_logo_transparent_white_text.png
   # basic: /assets/logos/dsa_anti-war_logo_transparent_basic.png
 
+# Collections
+
+collections:
+  campaigns:
+    output: true
+
 # Build settings
 
 markdown: kramdown
