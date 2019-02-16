@@ -8,7 +8,7 @@
         </a>
       {% endunless %}
 
-      <div class="hide-gt-header table float-right full-height font-smoothing-normal">
+      <div class="hide-gt-header table float-right full-height">
         <a href="#site-nav" class="target-hide cell v-center subtle-icon" data-menu-button="open">
           Menu <i class="fa fa-bars fa-fw fa-lg"></i>
         </a>
@@ -22,7 +22,7 @@
       {% for link in site.data.header %}
         {% for my_page in site.pages %}
           {% if link.page == my_page.path %}
-            <a class="cell v-center header-link padding-s-h subtle-icon font-smoothing-normal hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>
+            <a class="cell v-center header-link padding-s-h subtle-icon hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>
               {{ link.text }}
             </a>
           {% endif %}

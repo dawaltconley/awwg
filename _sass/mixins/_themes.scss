@@ -56,12 +56,12 @@
 
     @if $light-theme {
         $light-text: mix($text-color, $background-color, 58%);
-        -webkit-font-smoothing: subpixel-antialiased;
-        -moz-osx-font-smoothing: auto;
+        // -webkit-font-smoothing: subpixel-antialiased;
+        // -moz-osx-font-smoothing: auto;
     } @else {
         $light-text: mix($text-color, $background-color, 86%);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        // -webkit-font-smoothing: antialiased;
+        // -moz-osx-font-smoothing: grayscale;
     }
 
     // Basic Styles
