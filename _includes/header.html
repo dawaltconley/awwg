@@ -3,16 +3,17 @@
   <nav id="site-nav" class="full-size target clearfix">
     <div class="float-left float-none-lt-header full-width-lt-header full-height wrapper-padding padding-0-gt-header">
       {% unless include.center %}
-        <a class="float-left block full-height padding-xxs-v" href="{{ site.baseurl }}/">
+        <a class="float-left flex-row flex-align-center full-height padding-xxs-v subtle-icon" href="{{ site.baseurl }}/">
           <img class="full-height" src="{{ site.logo.basic }}" alt="">
+          <span class="margin-s-l hide-lt-header">DSA Anti-War</span>
         </a>
       {% endunless %}
 
-      <div class="hide-gt-header table float-right full-height">
-        <a href="#site-nav" class="target-hide cell v-center subtle-icon" data-menu-button="open">
+      <div class="hide-gt-header flex-row flex-align-center float-right full-height">
+        <a href="#site-nav" class="target-hide v-center subtle-icon" data-menu-button="open">
           Menu <i class="fa fa-bars fa-fw fa-lg"></i>
         </a>
-        <a href="#" class="hidden target-display cell v-center subtle-icon" data-menu-button="close">
+        <a href="#" class="hidden target-display v-center subtle-icon" data-menu-button="close">
           Close <i class="fa fa-times fa-fw fa-lg"></i>
         </a>
       </div>
