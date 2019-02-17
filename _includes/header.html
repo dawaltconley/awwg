@@ -1,15 +1,15 @@
-<header class="red relative full-width header-height wrapper-padding padding-0-lt-header z-9" data-menu data-fixed-header>
+<header class="red relative full-width header-height wrapper-padding padding-0-lt-header text-left z-9" data-menu data-fixed-header>
 
-  <nav id="site-nav" class="full-size target clearfix">
-    <div class="float-left float-none-lt-header full-width-lt-header full-height wrapper-padding padding-0-gt-header">
+  <nav id="site-nav" class="flex-row-gt-header full-size target">
+    <div class="flex-row full-height wrapper-padding padding-0-gt-header">
       {% unless include.center %}
-        <a class="float-left flex-row flex-align-center full-height padding-xxs-v subtle-icon" href="{{ site.baseurl }}/">
+        <a class="flex-row flex-align-center margin-auto-r full-height padding-xxs-v subtle-icon" href="{{ site.baseurl }}/">
           <img class="full-height" src="{{ site.logo.basic }}" alt="">
           <span class="margin-s-l hide-lt-header">DSA Anti-War</span>
         </a>
       {% endunless %}
 
-      <div class="hide-gt-header flex-row flex-align-center float-right full-height">
+      <div class="hide-gt-header flex-row flex-align-center margin-auto-l full-height">
         <a href="#site-nav" class="target-hide v-center subtle-icon" data-menu-button="open">
           Menu <i class="fa fa-bars fa-fw fa-lg"></i>
         </a>
@@ -19,11 +19,11 @@
       </div>
     </div>
 
-    <div class="table {% unless include.center %} float-right {% else %} margin-auto-h {% endunless %} float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a clearfix t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="flex-row {% unless include.center %} margin-auto-l {% else %} margin-auto-h {% endunless %} full-height target-max-height-expand theme-bg overflow-a t-default t-long" data-menu-links data-class-rm="t-long">
       {% for link in site.data.header %}
         {% for my_page in site.pages %}
           {% if link.page == my_page.path %}
-            <a class="cell v-center header-link padding-s-h subtle-icon hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>
+            <a class="flex-col flex-center header-link padding-s-h subtle-icon hover hover-shade hover-shade-dark-lt-header t-short" href="{{ my_page.url | prepend: site.baseurl }}" data-menu-link>
               {{ link.text }}
             </a>
           {% endif %}
