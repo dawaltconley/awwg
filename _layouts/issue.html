@@ -13,7 +13,7 @@ layout: basic
   {% for campaign_title in page.campaigns %}
     {% for campaign in site.campaigns %}
       {% if campaign.title == campaign_title %}
-        <h2><a href="{{ campaign.full_page }}">
+        <h2><a href="{{ campaign.url }}">
           {{ campaign.title }}
         </a></h2>
         {{ campaign.excerpt }}
