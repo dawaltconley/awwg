@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="table {% unless include.center %} float-right {% else %} margin-auto-h {% endunless %} float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a show-gt-header clearfix t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="table {% unless include.center %} float-right {% else %} margin-auto-h {% endunless %} float-none-lt-header full-width-lt-header full-height target-max-height-expand theme-bg overflow-a clearfix t-default t-long" data-menu-links data-class-rm="t-long">
       {% for link in site.data.header %}
         {% for my_page in site.pages %}
           {% if link.page == my_page.path %}
