@@ -25,6 +25,12 @@ collections:
   campaigns:
     output: true
 
+defaults:
+  - scope:
+      path: _campaigns
+    values:
+      layout: page
+
 # Build settings
 
 markdown: kramdown

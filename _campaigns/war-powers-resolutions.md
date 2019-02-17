@@ -1,5 +1,4 @@
 ---
-layout: page
 title: Pass the War Powers Resolutions
 ---
 

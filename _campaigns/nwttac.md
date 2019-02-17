@@ -1,5 +1,4 @@
 ---
-layout: page
 title: No Way To Treat A Child Campaign
 ---
 
