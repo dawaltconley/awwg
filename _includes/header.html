@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="flex-row {% unless include.center %} margin-auto-l {% else %} margin-auto-h {% endunless %} full-height target-max-height-expand theme-bg overflow-a t-default t-long" data-menu-links data-class-rm="t-long">
+    <div class="flex-row {% unless include.center %} margin-auto-l {% else %} margin-auto-h {% endunless %} full-height target-max-height-expand theme-bg overflow-v overflow-h-lt-header t-default t-long" data-menu-links data-class-rm="t-long">
       {% for link in site.data.header %}
         {% for my_page in site.pages %}
           {% if link.page == my_page.path %}
