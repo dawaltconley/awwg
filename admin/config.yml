@@ -23,7 +23,7 @@ collections:
 {% for c in site.campaigns %}
   - label: {{ c.short_title }}
     name: {{ c.short_title | slugify }}
-    folder: {{ c.short_title | slugify }}
+    folder: {{ c.slug }}
     create: true
     fields:
       - label: Title
