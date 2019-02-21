@@ -1,0 +1,23 @@
+---
+layout: basic
+---
+
+{% include header.html %}
+
+<article class="text-wrapper margin-auto-h padding-l-v wrapper-padding">
+
+  <h1>{{ page.title }}</h1>
+
+  {{ content }}
+
+  {% assign folder_name = page.short_title | slugify | append: '/' %}
+  {% for file in site.pages %}
+    {% if file.path contains folder_name %}
+      <h2><a href="{{ file.url }}">
+        {{ file.title }}
+      </a></h2>
+      {{ file.content | markdownify | truncatewords: 40 }}
+    {% endif %}
+  {% endfor %}
+
+</article>

@@ -1,6 +1,6 @@
 ---
-layout: issue
 title: End US support for the War on Yemen
+short_title: Yemen
 campaigns:
   - Pass the War Powers Resolutions
 ---

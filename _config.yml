@@ -22,20 +22,15 @@ logo:
 # Collections
 
 collections:
-  issues:
-    output: true
   campaigns:
     output: true
 
 defaults:
   - scope:
-      path: _issues
-    values:
-      layout: issue
-  - scope:
       path: _campaigns
     values:
-      layout: page
+      layout: campaign
+      permalink: /:title/
 
 # Build settings
 

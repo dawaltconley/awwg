@@ -1,6 +1,6 @@
 ---
-layout: issue
 title: Solidarity with Palestine
+short_title: Palestine
 campaigns:
   - No Way To Treat A Child Campaign
 ---
