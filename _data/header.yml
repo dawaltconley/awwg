@@ -2,3 +2,10 @@
   page: _issues/yemen.md
 - text: "Palestine"
   page: _issues/palestine.md
+
+# - text: "Campaigns"
+#   dropdown:
+#     - text: "Palestine"
+#       page: _issues/palestine.md
+#     - text: "Yemen"
+#       page: _issues/yemen.md
