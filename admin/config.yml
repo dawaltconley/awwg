@@ -10,6 +10,7 @@ collections:
     name: campaigns
     folder: _campaigns
     create: true
+    slug: {% raw %}"{{ short_title }}"{% endraw %}
     fields:
       - label: Title
         name: title
@@ -25,9 +26,13 @@ collections:
     name: {{ c.short_title | slugify }}
     folder: {{ c.slug }}
     create: true
+    slug: {% raw %}"{{ short_title }}"{% endraw %}
     fields:
       - label: Title
         name: title
+        widget: string
+      - label: Short Title
+        name: short_title
         widget: string
       - label: Body
         name: body
