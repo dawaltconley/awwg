@@ -10,6 +10,7 @@ collections:
     label_singular: Campaign
     name: campaigns
     folder: _campaigns
+    extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
     fields:
@@ -26,6 +27,7 @@ collections:
   - label: {{ c.short_title }}
     name: {{ c.short_title | slugify }}
     folder: {{ c.slug }}
+    extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
     fields:
