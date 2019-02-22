@@ -16,7 +16,8 @@ layout: basic
       <h2><a href="{{ file.url }}">
         {{ file.title }}
       </a></h2>
-      {{ file.content | markdownify | truncatewords: 40 }}
+      {% assign first_paragraph = file.content | markdownify | split: '</p>' | first | split: '<p>' | last | prepend: '<p>' | append: '</p>' %}
+      {{ first_paragraph }}
     {% endif %}
   {% endfor %}
 
