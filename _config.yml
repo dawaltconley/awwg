@@ -13,11 +13,13 @@ native_scroll: false # enables smooth scrolling by the scroll-behavior property,
 bg_testing: false # turn on to enable the bg-testing.html include
 emptyArray: [] # variable for easy array creation
 logo:
-  text: /assets/logos/dsa_anti-war_white_transparent.png
-  basic: /assets/logos/dsa_anti-war_white_transparent_basic.png
-  # black: /assets/logos/dsa_anti-war_logo_transparent.png
-  # white: /assets/logos/dsa_anti-war_logo_transparent_white_text.png
-  # basic: /assets/logos/dsa_anti-war_logo_transparent_basic.png
+  og:
+    basic: /assets/logos/dsa_anti-war_logo_transparent_basic.png
+    black_text: /assets/logos/dsa_anti-war_logo_transparent.png
+    white_text: /assets/logos/dsa_anti-war_logo_transparent_white_text.png
+  white:
+    basic: /assets/logos/dsa_anti-war_white_transparent_basic.png
+    text: /assets/logos/dsa_anti-war_white_transparent.png
 
 # Collections
 
