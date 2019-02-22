@@ -25,9 +25,14 @@ collections:
       - label: Title
         name: title
         widget: string
+        hint: Full title, used at the top of the page.
       - label: Short Title
         name: short_title
         widget: string
+        hint: >
+          Used for the page url, as well as
+          some menus and references to the page.
+          Should be as short as possible!
       - label: Body
         name: body
         widget: markdown
@@ -48,15 +53,23 @@ collections:
       - label: Title
         name: title
         widget: string
+        hint: Full title, used at the top of the page.
       - label: Short Title
         name: short_title
         widget: string
+        hint: >
+          Used for the page url, as well as
+          some menus and references to the page.
+          Should be as short as possible!
       - label: Body
         name: body
         widget: markdown
       - label: Campaign Page Blurb
         name: blurb
         widget: markdown
+        hint: >
+          Short description, used on the {{ c.short_title }} campaign page.
+          If blank, defaults to the first paragraph of the body.
       - lable: Layout
         name: layout
         widget: hidden
