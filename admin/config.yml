@@ -13,6 +13,12 @@ collections:
     extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
+    description: >
+      Overviews of the general campaigns adopted
+      by the working group. Each campaign page also
+      features links to related goals and demands,
+      which live in the campaign's directory. Creating
+      a new campaign will also generate a new directory.
     fields:
       - label: Title
         name: title
@@ -30,6 +36,12 @@ collections:
     extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
+    description: >
+      This collection is for pages describing the
+      various specific goals and demands of the
+      {{ c.short_title }} campaign. These will appear
+      on their own pages, linked to from the main
+      {{ c.short_title }} campaign page.
     fields:
       - label: Title
         name: title
