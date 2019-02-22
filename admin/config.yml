@@ -54,6 +54,9 @@ collections:
       - label: Body
         name: body
         widget: markdown
+      - label: Campaign Page Blurb
+        name: blurb
+        widget: markdown
       - lable: Layout
         name: layout
         widget: hidden
