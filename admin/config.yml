@@ -15,6 +15,7 @@ collections:
     extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
+    preview_page: {% raw %}"{{ slug }}"{% endraw %}
     description: >
       Overviews of the general campaigns adopted
       by the working group. Each campaign page also
@@ -43,6 +44,7 @@ collections:
     extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
+    preview_page: "{{ c.slug }}/{% raw %}{{ slug }}{% endraw %}"
     description: >
       This collection is for pages describing the
       various specific goals and demands of the
