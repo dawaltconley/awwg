@@ -1,0 +1,34 @@
+---
+layout: basic
+---
+
+{% include header.html %}
+
+<article class="text-wrapper margin-auto-h padding-l-v wrapper-padding v-rhythm">
+
+  <h1><!--field name="title"-->{{ page.title }}<!--/field--></h1>
+
+  <main>
+    <!--field widget="body"-->
+    {{ content }}
+    <!--/field-->
+  </main>
+
+  {% assign folder_name = page.short_title | slugify | append: '/' %}
+  {% for file in site.pages %}
+    {% if file.path contains folder_name %}
+      <h2><a href="{{ file.url }}">
+        {{ file.title }}
+      </a></h2>
+
+      {% if file.blurb %}
+        {% assign blurb = file.blurb | markdownify %}
+      {% else %}
+        {% assign blurb = file.content | markdownify | split: '</p>' | first | split: '<p>' | last | prepend: '<p>' | append: '</p>' %}
+      {% endif %}
+      {{ blurb }}
+
+    {% endif %}
+  {% endfor %}
+
+</article>

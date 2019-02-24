@@ -1,16 +1,79 @@
+---
+---
+
 backend:
   name: git-gateway
   branch: master
 media_folder: "assets/uploads"
+site_url: {{ site.url }}
+logo_url: {{ site.logo.og.basic }}
 collections:
   - label: Campaigns
+    label_singular: Campaign
     name: campaigns
     folder: _campaigns
+    extension: md
     create: true
+    slug: {% raw %}"{{ short_title }}"{% endraw %}
+    preview_page: {% raw %}"{{ slug }}"{% endraw %}
+    description: >
+      Overviews of the general campaigns adopted
+      by the working group. Each campaign page also
+      features links to related goals and demands,
+      which live in the campaign's directory. Creating
+      a new campaign will also generate a new directory.
     fields:
       - label: Title
         name: title
         widget: string
+        hint: Full title, used at the top of the page.
+      - label: Short Title
+        name: short_title
+        widget: string
+        hint: >
+          Used for the page url, as well as
+          some menus and references to the page.
+          Should be as short as possible!
       - label: Body
         name: body
         widget: markdown
+{% for c in site.campaigns %}
+  - label: {{ c.short_title }}
+    name: {{ c.short_title | slugify }}
+    folder: {{ c.slug }}
+    extension: md
+    create: true
+    slug: {% raw %}"{{ short_title }}"{% endraw %}
+    preview_page: "{{ c.slug }}/{% raw %}{{ slug }}{% endraw %}"
+    description: >
+      This collection is for pages describing the
+      various specific goals and demands of the
+      {{ c.short_title }} campaign. These will appear
+      on their own pages, linked to from the main
+      {{ c.short_title }} campaign page.
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: Full title, used at the top of the page.
+      - label: Short Title
+        name: short_title
+        widget: string
+        hint: >
+          Used for the page url, as well as
+          some menus and references to the page.
+          Should be as short as possible!
+      - label: Body
+        name: body
+        widget: markdown
+      - label: Campaign Page Blurb
+        name: blurb
+        widget: markdown
+        hint: >
+          Short description, used on the {{ c.short_title }} campaign page.
+          If blank, defaults to the first paragraph of the body.
+      - lable: Layout
+        name: layout
+        widget: hidden
+        default: page
+{% endfor %}

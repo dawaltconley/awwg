@@ -1,11 +1,18 @@
 ---
-title: AWWG Content Manager
 ---
 
 <!DOCTYPE html>
 <html>
-  {% include head.html %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWWG Content Manager</title>
+    {% include netlify-identity.html %}
+  </head>
   <body>
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom-server.browser.development.js" crossorigin></script>
+    <script src="{{ site.baseurl }}/js/live-preview.js"></script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 ---
+layout: page
 title: Pass the War Powers Resolutions
+short_title: War Powers Resolutions
 ---
 
 ## Issue
