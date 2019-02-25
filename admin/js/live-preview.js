@@ -5,10 +5,10 @@ CMS.registerPreviewStyle("/css/main.css");
 
 var fieldsRegEx = /<!-- *?field +?(\w+?)="(\w*?)".*?-->.*?<!-- *?\/field *?-->/;
 
-function updateHTML (html, props) {
-    var match;
-    var replace;
-    while (match = fieldsRegEx.exec(html)) {
+function updateHTML (html, props, regEx) {
+    var regEx = arguments.length > 2 && arguments [2] != undefined ? arguments[2] : fieldsRegEx;
+    var match, replace;
+    while (match = regEx.exec(html)) {
         if (match[1] == "name") {
             replace = props.entry.getIn(["data", match[2]]);
         } else if (match[1] == "widget") {
