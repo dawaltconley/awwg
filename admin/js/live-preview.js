@@ -25,7 +25,7 @@ function updateHTML (html, props, regEx) {
     var {{ c.label }} = {
         {% for doc in c.docs %}
             {% assign template = doc | strip_newlines | split: '<body' | last | split: '</body>' | first | prepend: '<div' | append: '</div>' %}
-            {{ doc.slug }} : '{{ template }}'{% unless forloop.last %},{% endunless %}
+            "{{ doc.slug }}" : '{{ template }}'{% unless forloop.last %},{% endunless %}
         {% endfor %}
     }
 
