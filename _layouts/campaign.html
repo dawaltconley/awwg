@@ -14,7 +14,7 @@ layout: basic
     <!--/field-->
   </main>
 
-  {% assign folder_name = page.short_title | slugify | append: '/' %}
+  {% assign folder_name = page.slug | append: '/' %}
   {% for file in site.campaigns %}
     {% if file.path contains folder_name %}
       <h2><a href="{{ file.url }}">
