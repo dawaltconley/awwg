@@ -32,7 +32,12 @@ defaults:
       path: _campaigns
     values:
       layout: campaign
-      permalink: /:title/
+      permalink: /:path/
+      sub_campaign: false
+  - scope:
+      path: _campaigns/*/*
+    values:
+      sub_campaign: true
 
 # Build settings
 

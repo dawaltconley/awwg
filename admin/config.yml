@@ -37,10 +37,10 @@ collections:
       - label: Body
         name: body
         widget: markdown
-{% for c in site.campaigns %}
+{% for c in site.campaigns %}{% unless c.sub_campaign %}
   - label: {{ c.short_title }}
     name: {{ c.short_title | slugify }}
-    folder: {{ c.slug }}
+    folder: _campaigns/{{ c.slug }}
     extension: md
     create: true
     slug: {% raw %}"{{ short_title }}"{% endraw %}
@@ -76,4 +76,4 @@ collections:
         name: layout
         widget: hidden
         default: page
-{% endfor %}
+{% endunless %}{% endfor %}
