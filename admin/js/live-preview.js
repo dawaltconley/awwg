@@ -24,19 +24,30 @@ function updateHTML (html, props, regEx) {
     // make a map of file slugs and their html content
     var {{ c.label }} = {
         {% for doc in c.docs %}
-            {% unless doc.sub_campaign %}
-                {% assign template = doc | strip_newlines | split: '<body' | last | split: '</body>' | first | prepend: '<div' | append: '</div>' %}
-                "{{ doc.slug }}" : '{{ template }}'{% unless forloop.last %},{% endunless %}
-            {% endunless %}
+            {% assign template = doc | strip_newlines | split: '<body' | last | split: '</body>' | first | prepend: '<div' | append: '</div>' %}
+            "{{ doc.path }}" : '{{ template }}'{% unless forloop.last %},{% endunless %}
         {% endfor %}
     }
 
     // generate a live preview
     CMS.registerPreviewTemplate("{{ c.label }}", createClass({
         render () {
-            var html = {{ c.label }}[this.props.entry.get("slug")]; // use html content from page with corresponding slug
+            var html = {{ c.label }}[this.props.entry.get("path")]; // use html content from page with corresponding slug
             return h("div", { "dangerouslySetInnerHTML" : {__html: updateHTML(html, this.props) } });
         }
     }));
 
+{% endfor %}
+
+{% for c in site.campaigns %}
+    {% unless c.sub_campaign %}
+
+        CMS.registerPreviewTemplate("{{ c.slug }}", createClass({
+            render () {
+                var html = campaigns[this.props.entry.get("path")]; // use html content from page with corresponding slug
+                return h("div", { "dangerouslySetInnerHTML" : {__html: updateHTML(html, this.props) } });
+            }
+        }));
+
+    {% endunless %}
 {% endfor %}
