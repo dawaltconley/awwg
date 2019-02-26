@@ -24,8 +24,10 @@ function updateHTML (html, props, regEx) {
     // make a map of file slugs and their html content
     var {{ c.label }} = {
         {% for doc in c.docs %}
-            {% assign template = doc | strip_newlines | split: '<body' | last | split: '</body>' | first | prepend: '<div' | append: '</div>' %}
-            "{{ doc.slug }}" : '{{ template }}'{% unless forloop.last %},{% endunless %}
+            {% unless doc.sub_campaign %}
+                {% assign template = doc | strip_newlines | split: '<body' | last | split: '</body>' | first | prepend: '<div' | append: '</div>' %}
+                "{{ doc.slug }}" : '{{ template }}'{% unless forloop.last %},{% endunless %}
+            {% endunless %}
         {% endfor %}
     }
 
