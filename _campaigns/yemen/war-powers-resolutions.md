@@ -43,6 +43,6 @@ An example script, which you can follow while making your call:
 
 If you would like to do more to advocate for this legislation, there are further steps you can take. We recommend organizing a meeting with other concerned constituents at your Senator's office—or, if they are not amenable to that, organizing a protest outside!
 
-The [Yemeni Alliance Committee](https://www.facebook.com/YACofCalifornia/) has put together a helpful [toolkit](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit) for supporting the effort to end US support for the war on Yemen.
+The [Yemeni Alliance Committee](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit?usp=sharing) has put together a helpful [toolkit](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit) for supporting the effort to end US support for the war on Yemen.
 
 We also encourage you to reach out to us at <mailto:antiwar@socialists.nyc> if you have any questions!
