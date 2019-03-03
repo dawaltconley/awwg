@@ -1,10 +1,6 @@
 ---
 title: Pass the War Powers Legislation
 short_title: War Powers Legislation
-blurb: >-
-  The NYC-DSA Anti-War Working Group supports the War Powers legislation in the
-  House and Senate that would direct the US to withdraw support from the
-  Saudi-led coalition in Yemen.
 layout: page
 ---
 The NYC-DSA Anti-War Working Group supports the War Powers legislation in the House and Senate that would direct the US to withdraw support from the Saudi-led coalition in Yemen.

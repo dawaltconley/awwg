@@ -69,6 +69,7 @@ collections:
       - label: Campaign Page Blurb
         name: blurb
         widget: markdown
+        required: false
         hint: >
           Short description, used on the {{ c.short_title }} campaign page.
           If blank, defaults to the first paragraph of the body.
