@@ -94,7 +94,7 @@
             left: cRect.left - pRect.left,
             right: cRect.right - pRect.left
         }
-        if (parent.offsetHeight != parent.scrollHeight) {
+        if (parent.offsetHeight < parent.scrollHeight) {
             rRect.top = rRect.top + parent.scrollTop;
             rRect.bottom = rRect.bottom + parent.scrollTop;
             rRect.left = rRect.left + parent.scrollLeft;
@@ -353,7 +353,7 @@
         this.doneResizing = window.setTimeout(win.addEventListener.bind(win, "scroll", this.scrollListener, passive), 100);
         this.refPos = pagePos(this.headerRef);
         this.height = this.headerRef.clientHeight;
-        updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px" });
+        updateObj(this.element.style, { width: this.headerRef.clientWidth.toString() + "px", height: this.height.toString() + "px" });
     }
 
     FixedHeader.prototype.slideDown = function () {
