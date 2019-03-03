@@ -27,7 +27,7 @@ Together with an informal coalition of organizations, we've identified a list of
 * Sen. Kyrsten Sinema (D-AZ), [202-224-4521](tel:+12022244521)
 * Sen. Jacky Rosen (D-NV), [202-224-6244](tel:+12022246244)
 
-We are encouraging everyone in Indiana, Montana, Kansas, Utah, Maine, Arizona, and Nevada, to call your senator listed above and demand that they vote “yes” on S.J.Res.7!
+These are the Senators who need the most pressure, but we are still encouraging everyone, in _every_ state, to call their senators and demand that they vote “yes” on S.J.Res.7!
 
 ### Call Script
 
