@@ -17,7 +17,7 @@ The Senate-version of the bill, introduced by Sens. Bernie Sanders (I-VT), Chris
 
 ## Targets
 
-Together with an informal coalition of organizations, we've identified a list of target Senators, who could vote either way:
+Together with an informal coalition of organizations, we've identified a list of target senators, who could vote either way:
 
 * Sen. Todd Young (R-IN), [202-224-5623](tel:+12022245623)
 * Sen. Steve Daines (R-MT), [202-224-2651](tel:+12022242651)
@@ -27,7 +27,7 @@ Together with an informal coalition of organizations, we've identified a list of
 * Sen. Kyrsten Sinema (D-AZ), [202-224-4521](tel:+12022244521)
 * Sen. Jacky Rosen (D-NV), [202-224-6244](tel:+12022246244)
 
-These are the Senators who need the most pressure, but we are still encouraging everyone, in _every_ state, to call their senators and demand that they vote “yes” on S.J.Res.7!
+These are the senators who need the most pressure, but we are still encouraging everyone, in _every_ state, to call their senators by dialing [1-833-STOP-WAR](tel:+18337867927) and ask them to vote “yes” on S.J.Res.7!
 
 ### Call Script
 
@@ -37,7 +37,7 @@ An example script, which you can follow while making your call:
 
 ## Further Action
 
-If you would like to do more to advocate for this legislation, there are further steps you can take. We recommend organizing a meeting with other concerned constituents at your Senator's office—or, if they are not amenable to that, organizing a protest outside!
+If you would like to do more to advocate for this legislation, there are further steps you can take. We recommend organizing a meeting with other concerned constituents at your senator's office—or, if they are not amenable to that, organizing a protest outside!
 
 The [Yemeni Alliance Committee](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit?usp=sharing) has put together a helpful [toolkit](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit) for supporting the effort to end US support for the war on Yemen.
 
