@@ -3,7 +3,10 @@ title: Pass the War Powers Legislation
 short_title: War Powers Legislation
 layout: page
 ---
-The NYC-DSA Anti-War Working Group supports the War Powers legislation in the House and Senate that would direct the US to withdraw support from the Saudi-led coalition in Yemen.
+The NYC-DSA Anti-War Working Group supports the War Powers legislation in the House and Senate that would direct the US to withdraw support from the Saudi-led coalition in Yemen. We are asking people to pressure their representatives to sign on.
+
+<a class="button" href="#targets" data-smooth-scroll>Take Action!</a>
+{: class="text-center" }
 
 These resolutions—[H.J.Res.37](https://www.congress.gov/bill/116th-congress/house-joint-resolution/37) in the House and [S.J.Res.7](https://www.congress.gov/bill/116th-congress/senate-joint-resolution/7) in the Senate—correctly identify that US support for the Saudi coalition in Yemen has never been authorized by Congress and does not fall within the scope of the 2001 Authorization for Use of Military Force. Both bills invoke the 1973 War Powers Resolution, which grants them privileged status, making it an effective tool for forcing a vote on an uncomfortable issue and addressing the humanitarian crisis currently unfolding in Yemen.
 
