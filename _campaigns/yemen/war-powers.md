@@ -13,7 +13,7 @@ An earlier version of H.J.Res.37 was introduced by Rep. Ro Khanna in 2016 and [t
 
 ## Senate bill, S.J.Res.7
 
-The Senate-version of the bill, introduced by Sens. Bernie Sanders (I-VT), Chris Murphy (D-CT), and Mike Lee (R-UT), will come to a vote sometime **next week** (the first week of March 2019). Because of Republican gains in the Senate last November, we expect it to be a very close vote, coming down to a few swingable Republicans. If passed, this would be a huge step towards ending the bloody US-backed intervention in Yemen. It would also challenge the rigorously unexamined scope of the war on terror and the President's authority in executing it.
+The Senate-version of the bill, introduced by Sens. Bernie Sanders (I-VT), Chris Murphy (D-CT), and Mike Lee (R-UT), will come to a vote sometime **next week** (the second week of March 2019). Because of Republican gains in the Senate last November, we expect it to be a very close vote, coming down to a few swingable Republicans. If passed, this would be a huge step towards ending the bloody US-backed intervention in Yemen. It would also challenge the rigorously unexamined scope of the war on terror and the President's authority in executing it.
 
 ## Targets
 
