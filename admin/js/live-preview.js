@@ -37,14 +37,16 @@ const generatePreviews = configData => {
     config.collections.forEach(c => {
         const collection = c.folder.match(/_(.*?)(?:\/.*)?$/)[1] // don't creat this variable, name is too confusing
         const cDocs = docs.filter(d => d.collection === collection) // may not even need to do this...can i just use the document path? should always be unique? --> right now collection just serves as a way to get a generic layout for new docs
-        CMS.registerPreviewTemplate(c.name, createClass({
-            render () {
-                const path = this.props.entry.get('path')
-                const match = cDocs.find(d => d.path === path)
-                const matchDir = cDocs.find(d => d.path.match(`${c.folder}/`))
-                const html = match ? match.html : matchDir ? cleanHTML(matchDir.html) : cleanHTML(cDocs[0].html)
-                return h('div', { 'dangerouslySetInnerHTML' : {__html: updateHTML(html, this.props) } })
-            }
-        }))
+        if (cDocs) {
+            CMS.registerPreviewTemplate(c.name, createClass({
+                render () {
+                    const path = this.props.entry.get('path')
+                    const match = cDocs.find(d => d.path === path)
+                    const matchDir = cDocs.find(d => d.path.match(`${c.folder}/`))
+                    const html = match ? match.html : matchDir ? cleanHTML(matchDir.html) : cleanHTML(cDocs[0].html)
+                    return h('div', { 'dangerouslySetInnerHTML' : {__html: updateHTML(html, this.props) } })
+                }
+            }))
+        }
     })
 }
