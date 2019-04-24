@@ -5,8 +5,7 @@ layout: page
 ---
 The NYC-DSA Anti-War Working Group supports the War Powers legislation in the House and Senate that would direct the US to withdraw support from the Saudi-led coalition in Yemen. We are asking people to pressure their representatives to sign on.
 
-<a class="button" href="#targets" data-smooth-scroll>Take Action!</a>
-{: class="text-center" }
+<p class="text-center"><a class="button" href="#targets" data-smooth-scroll>Take Action!</a></p>
 
 These resolutions—[H.J.Res.37](https://www.congress.gov/bill/116th-congress/house-joint-resolution/37) in the House and [S.J.Res.7](https://www.congress.gov/bill/116th-congress/senate-joint-resolution/7) in the Senate—correctly identify that US support for the Saudi coalition in Yemen has never been authorized by Congress and does not fall within the scope of the 2001 Authorization for Use of Military Force. Both bills invoke the 1973 War Powers Resolution, which grants them privileged status, making it an effective tool for forcing a vote on an uncomfortable issue and addressing the humanitarian crisis currently unfolding in Yemen.
 
@@ -42,6 +41,6 @@ An example script, which you can follow while making your call:
 
 If you would like to do more to advocate for this legislation, there are further steps you can take. We recommend organizing a meeting with other concerned constituents at your senator's office—or, if they are not amenable to that, organizing a protest outside!
 
-The [Yemeni Alliance Committee](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit?usp=sharing) has put together a helpful [toolkit](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit) for supporting the effort to end US support for the war on Yemen.
+The [Yemeni Alliance Committee](https://www.facebook.com/YACofCalifornia/) has put together a helpful [toolkit](https://docs.google.com/document/d/1UJWpQuguJ2A64tZ8htsx-HrYXnvZwjlpyByt1pviTAA/edit) for supporting the effort to end US support for the war on Yemen.
 
 We also encourage you to reach out to us at <mailto:antiwar@socialists.nyc> if you have any questions!
