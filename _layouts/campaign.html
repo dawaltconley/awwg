@@ -14,6 +14,7 @@ layout: basic
     <!--/field-->
   </main>
 
+  <!--ignore-->
   {% assign folder_name = page.slug | append: '/' %}
   {% for file in site.campaigns %}
     {% if file.path contains folder_name %}
@@ -30,5 +31,6 @@ layout: basic
 
     {% endif %}
   {% endfor %}
+  <!--/ignore-->
 
 </article>
