@@ -41,7 +41,8 @@ const generatePreviews = configData => {
             render () {
                 const path = this.props.entry.get('path')
                 const match = cDocs.find(d => d.path === path)
-                const html = match ? match.html : cleanHTML(cDocs[0].html)
+                const matchDir = cDocs.find(d => d.path.match(`${c.folder}/`))
+                const html = match ? match.html : matchDir ? cleanHTML(matchDir.html) : cleanHTML(cDocs[0].html)
                 return h('div', { 'dangerouslySetInnerHTML' : {__html: updateHTML(html, this.props) } })
             }
         }))
