@@ -21,13 +21,15 @@
 
   {% include head.html %}
 
-  <body class="{% if parallax %} parallax-body {% endif %}" {% if itemtype %} itemscope itemtype="{{ itemtype }}" {% endif %}>
+  <body class="{% unless parallax %} flex-col flex-none screen-height-min {% else %} parallax-body {% endunless %}" {% if itemtype %} itemscope itemtype="{{ itemtype }}" {% endif %}>
 
     {% if parallax %}
-    <div class="parallax-page">
+    <div class="flex-col flex-none parallax-page">
     {% endif %}
 
       {{ content }}
+
+      {% include footer.html %}
 
     {% if parallax %}
     </div>

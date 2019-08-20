@@ -1,14 +1,13 @@
 // Basic Variables
 
 $base-font-family:      "Manifold DSA", "Klima", "Roboto Slab", sans-serif;
-$base-font-size:        1.25rem;
 $base-font-weight:      400;
 $base-line-height:      1.4;
 $base-line-length:      36em;
-$base-icon-size:        1.5rem;
 
-$header-sizes:          2em, 1.5em, 1.2em;
-$header-font-weight:    600;
+$heading-sizes:         2em, 1.5em, 1.2em;
+$heading-font-family:   null;
+$heading-font-weight:   600;
 
 $text-shadow:           1px 1px 4px rgba(0, 0, 0, 0.2);
 $full-shadow:           0 0 0.24em black;
@@ -42,6 +41,13 @@ $themes: (
 );
 
 $theme-depth: 1; // controls the depth (in a series nested themes) at which an element still inherits the styles of its immediate ancestor theme. stylesheets get much larger and more complex as this number increases, so it should be set as low as possible.
+
+$font-sizes: (
+    "base": 1.25rem,
+    "icon": 1.5rem,
+);
+
+$base-font-size: map-get($font-sizes, base);
 
 $sizes: (
     "full":             100%,
@@ -81,6 +87,8 @@ $transitions: (
     "long":     1s,
 );
 
+$t-icons: map-get($transitions, default);
+
 // Breakpoints
 
 $bp: (
@@ -89,3 +97,10 @@ $bp: (
     "mobile":   600px,
     "header":   600px,
 );
+
+// Functional
+
+$sides: "top", "bottom", "left", "right";
+$side: null;
+
+$angles: ("top": 0deg, "bottom": 180deg, "left": 90deg, "right": 270deg);

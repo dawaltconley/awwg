@@ -48,12 +48,40 @@ body {
 h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
-%vertical-rhythm {
+article header,
+%vertical-rhythm,
+.v-rhythm > * {
     margin-bottom: $default-spacing;
+    margin-right: 0;
+}
 
-    &:last-child {
-        margin-bottom: 0;
+%horizontal-rhythm,
+.h-rhythm > * {
+    margin-right: $default-spacing;
+    margin-bottom: 0;
+}
+
+.v-rhythm {
+    @include mq {
+        & > * {
+            margin-bottom: $default-spacing;
+            margin-right: 0;
+        }
     }
+}
+
+.h-rhythm {
+    @include mq {
+        & > * {
+            margin-right: $default-spacing;
+            margin-bottom: 0;
+        }
+    }
+}
+
+*:last-child {
+    margin-bottom: 0;
+    margin-right: 0;
 }
 
 /**
@@ -62,6 +90,17 @@ ul, ol, dl, figure,
 img {
     max-width: 100%;
     vertical-align: middle;
+}
+
+figcaption {
+    @extend .text-light !optional;
+    font-style: italic;
+    font-synthesis: bold;
+    text-align: center;
+
+    & > * {
+        font-synthesis: initial;
+    }
 }
 
 iframe {
@@ -88,20 +127,19 @@ figcaption {
 ul, ol {
     margin-left: $default-spacing * 2;
 
-    @media screen and (max-width: map-get($bp, "mobile")) {
+    @media screen and (max-width: map-get($bp, mobile)) {
         margin-left: $default-spacing;
     }
 }
 
 li {
     > ul,
-    > ol,
-    > p:only-child {
+    > ol {
          margin-bottom: 0;
     }
 }
 
-ul.unlist {
+.unlist {
     margin-left: 0;
     list-style: none;
 }
@@ -111,25 +149,28 @@ ul.unlist {
  */
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: $header-font-weight;
+    font-family: $heading-font-family;
+    font-weight: $heading-font-weight;
     line-height: 1;
     text-decoration: none;
 }
 
 @for $i from 1 through 6 { // generate header styles
-    $font-size: 1em;
-    @if $i <= length($header-sizes) {
-        $font-size: nth($header-sizes, $i);
-    }
+    $font-size: if($i > length($heading-sizes), 1em, nth($heading-sizes, $i));
 
-    h#{$i} {
+    h#{$i}, .fs-h#{$i} {
         font-size: $font-size;
         letter-spacing: $font-size / -100;
     }
 }
 
 hr {
+    @extend .border-light-t !optional;
     margin: $default-spacing 0;
+    height: 1px;
+    border: 0;
+    border-top-width: 1px;
+    border-top-style: solid;
 }
 
 /**
@@ -144,6 +185,13 @@ a {
     }
 }
 
+button {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: inherit;
+}
+
 /*
  * Blockquotes
  */
@@ -155,10 +203,6 @@ blockquote {
     font-size: smaller;
     letter-spacing: -1px;
     font-style: italic;
-
-    > :last-child {
-        margin-bottom: 0;
-    }
 }
 
 /*

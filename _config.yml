@@ -7,6 +7,10 @@ url: https://antiwar.netlify.com/ # full url of main site
 og_image: /assets/logos/og-banner.jpg # default og image used for entire site; can be overridden if specified in page or collection frontmatter
 google_analytics: # tracking number
 permalink: /:title/ # default permalink structure for pages
+copyright:
+  date: 2019-08-20T00:02:00-4:00 # date the site was created
+  owner: Dylan Awalt-Conley # owner of the site
+
 timezone: America/New_York # used for liquid-generated datetimes
 auto_scroll: false # enables smooth scrolling for all same-page links using zenscroll
 native_scroll: false # enables smooth scrolling by the scroll-behavior property, for all browsers that support it
@@ -44,10 +48,8 @@ defaults:
 markdown: kramdown
 exclude:
   - "README.md"
-  - "Gemfile"
-  - "Gemfile.lock"
-  - "package.json"
-  - "package-lock.json"
+  - "Gemfile*"
+  - "package*.json"
   - "node_modules"
   - "gulpfile.js"
   - "assets/test"

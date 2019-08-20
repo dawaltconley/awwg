@@ -5,6 +5,15 @@ body.parallax-body {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
+
+    &::before { // fixes rendering issues on Edge
+        content: "";
+        position: fixed;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 1;
+    }
 }
 
 .parallax-page {
@@ -27,12 +36,11 @@ body.parallax-body {
 }
 
 .parallax-group {
-    @extend .relative;
+    @extend .relative, .click-through;
     background-color: transparent !important;
-    pointer-events: none;
 
-    > * {
-        pointer-events: auto;
+    & > * {
+        @extend .relative;
     }
 
     @include parallax-support {

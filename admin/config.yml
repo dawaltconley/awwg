@@ -1,21 +1,27 @@
 ---
 ---
 
+# https://www.netlifycms.org/docs/configuration-options/
+
 backend:
   name: git-gateway
   branch: master
 media_folder: "assets/uploads"
 site_url: {{ site.url }}
+{% if site.logo %}
 logo_url: {{ site.logo.og.basic }}
+{% endif %}
 collections:
   - label: Campaigns
     label_singular: Campaign
     name: campaigns
     folder: _campaigns
     extension: md
+    format: yaml-frontmatter
     create: true
-    slug: {% raw %}"{{ short_title }}"{% endraw %}
-    preview_page: {% raw %}"{{ slug }}"{% endraw %}
+    identifier_field: short_title
+    slug: {% raw %}"{{slug}}"{% endraw %}
+    preview_page: {% raw %}"{{slug}}"{% endraw %}
     description: >
       Overviews of the general campaigns adopted
       by the working group. Each campaign page also
@@ -44,9 +50,11 @@ collections:
     name: {{ c.short_title | slugify }}
     folder: _campaigns/{{ c.slug }}
     extension: md
+    format: yaml-frontmatter
     create: true
-    slug: {% raw %}"{{ short_title }}"{% endraw %}
-    preview_page: "{{ c.slug }}/{% raw %}{{ slug }}{% endraw %}"
+    identifier_field: short_title
+    slug: {% raw %}"{{slug}}"{% endraw %}
+    preview_page: "{{ c.slug }}/{% raw %}{{slug}}{% endraw %}"
     description: >
       This collection is for pages describing the
       various specific goals and demands of the
@@ -82,3 +90,55 @@ collections:
         widget: hidden
         default: page
 {% endunless %}{% endfor %}
+  - label: Data
+    name: data
+    editor:
+      preview: false
+    description: >
+      This is where you will be able to update different
+      types of data, which are used throughout the site.
+    files:
+      - label: Site Data
+        name: site
+        file: _config.yml
+        fields:
+          - label: Site title
+            name: title
+            widget: string
+          - label: Site description
+            name: description
+            widget: string
+          - label: Copyright
+            name: copyright
+            widget: object
+            fields:
+              - label: Copyright date
+                name: date
+                widget: datetime
+                format: "YYYY-MM-DDTHH:mm:ssZ"
+                hint: >
+                  Usually the date the site was created,
+                  unless otherwise renewed.
+              - label: Site owner
+                name: owner
+                widget: string
+          - label: Site image
+            name: og_image
+            required: false
+            widget: image
+            allow_multiple: false
+          - label: Google Analytics
+            name: google_analytics
+            required: false
+            widget: string
+            hint: >
+              Enter your tracking number to turn on analytics
+              for the site.
+      - label: Contact info
+        name: contact
+        file: _data/contact.yml
+        fields: {% for c in site.data.icon-types %}
+          - label: {{ c.label }}
+            name: {{ c.type }}
+            required: false
+            widget: string {% endfor %}

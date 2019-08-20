@@ -22,14 +22,6 @@
     float: right;
 }
 
-.v-rhythm > * {
-    @extend %vertical-rhythm;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
 .transparent {
     opacity: 0;
 }
@@ -99,6 +91,20 @@
     max-height: 600px;
 }
 
+#header.header-size, #header.header-height {
+    & + .parallax-group {
+        $hh: map-get($sizes, header);
+        $hh: nth($hh, length($hh));
+        margin-top: -$hh;
+        padding-top: $hh;
+    }
+}
+
+.slide-button-width {
+    width: 20%;
+    min-width: 80px;
+}
+
 /*
  * Margins
  */
@@ -160,10 +166,8 @@
  */
 
 @for $i from nth($z-range, 1) through nth($z-range, 2) {
-    $class-name: z-#{$i};
-    @if ($i < 0) {
-        $class-name: z-neg-#{($i * -1)};
-    }
+    $class-name: if($i < 0, z-neg-#{($i * -1)}, z-#{$i});
+
     .#{$class-name} {
         @extend .relative;
         z-index: $i;
@@ -171,11 +175,13 @@
 }
 
 .front {
+    @extend .relative;
     z-index: nth($z-range, 2) + 1;
 }
 
 .back {
-    z-index: nth($z-range, 1) -1;
+    @extend .relative;
+    z-index: nth($z-range, 1) - 1;
 }
 
 /*
@@ -187,7 +193,20 @@
         @include all-sides {
             border-#{$side}-width: map-get($styles, width);
             border-#{$side}-style: map-get($styles, style);
-            border-#{$side}-color: map-get($styles, color) !important;
+            @if map-has-key($styles, color) {
+                border-#{$side}-color: map-get($styles, color) !important;
+            }
+        }
+    }
+
+    .h-line-#{$name} {
+        @extend %h-line;
+        &::before, &::after {
+            border-top-width: map-get($styles, width);
+            border-top-style: map-get($styles, style);
+            @if map-has-key($styles, color) {
+                border-top-color: map-get($styles, color) !important;
+            }
         }
     }
 }
@@ -208,5 +227,31 @@
 
     &:nth-child(n + 1) {
         border-top-width: 0;
+    }
+}
+
+.border-smooth {
+    border-radius: 10px;
+}
+
+.ellipse {
+    border-radius: 50%;
+}
+
+%h-line {
+    @extend .flex-row, .flex-align-center;
+
+    &::before, &::after {
+        content: "";
+        flex: 1 1 auto;
+        border-top-color: inherit;
+    }
+
+    &::before {
+        margin-right: .5em;
+    }
+
+    &::after {
+        margin-left: .5em;
     }
 }

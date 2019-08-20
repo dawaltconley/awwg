@@ -17,6 +17,10 @@
     font-weight: bold;
 }
 
+.italic {
+    font-style: italic;
+}
+
 .shadow {
     text-shadow: $text-shadow;
 }
@@ -85,6 +89,22 @@
     text-transform: capitalize;
 }
 
+.fs-larger {
+    font-size: if(map-has-key($font-sizes, larger), map-get($font-sizes, larger), larger);
+}
+
+.fs-smaller {
+    font-size: if(map-has-key($font-sizes, smaller), map-get($font-sizes, smaller), smaller);
+}
+
+@each $name, $size in $font-sizes {
+    @if not index(larger smaller, $name) {
+        .fs-#{$name} {
+            font-size: $size;
+        }
+    }
+}
+
 .no-wrap {
     white-space: nowrap;
 }
@@ -105,4 +125,5 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    user-select: none;
 }

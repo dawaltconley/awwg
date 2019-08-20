@@ -28,12 +28,16 @@
     align-items: flex-end;
 }
 
-.fill-flex-parent {
+.flex-fill > *, .fill-flex-parent {
     flex: 1 1 auto;
 }
 
 .flex-even > * {
     flex: 1 1 0%;
+}
+
+.flex-none > * {
+    flex: none;
 }
 
 .flex-space-between {

@@ -7,6 +7,7 @@ var imageResize = require("gulp-image-resize");
 var imageMin = require("gulp-imagemin");
 var postcss = require("gulp-postcss");
 var autoprefixer = require("autoprefixer");
+var flexbugs = require("postcss-flexbugs-fixes");
 var pump = require("pump");
 var merge = require("merge-stream");
 var child = require("child_process");
@@ -17,11 +18,15 @@ var fs = require("fs");
  * Jekyll
  */
 
-const jekyllEnv = process.env.CONTEXT == "production" ? "production" : "gulp";
+const jekyllEnv = process.env.CONTEXT === "production" ? "production" : "gulp";
 
-function jekyllBuild(env = "development") {
-    var cmd = "JEKYLL_ENV=" + env + " bundle exec jekyll build";
-    return child.exec(cmd, { stdio: "inherit" });
+function jekyllBuild(env = "development", cb) {
+    const eachLine = (buffer, callback) => buffer.toString().split("\n").filter(s => s).forEach(callback);
+    const childEnv = { ...process.env, JEKYLL_ENV: env };
+    const build = child.spawn("bundle", ["exec", "jekyll", "build"], { env: childEnv });
+    build.on("close", cb);
+    build.stdout.on("data", data => eachLine(data, l => console.log(l)));
+    build.stderr.on("data", data => eachLine(data, l => console.error(l)));
 }
 
 gulp.task("build", jekyllBuild.bind(null, jekyllEnv));
@@ -31,13 +36,16 @@ gulp.task("build", jekyllBuild.bind(null, jekyllEnv));
  */
 
 gulp.task("css", function (cb) {
-    pump([
-        gulp.src("./_site/css/main.css"),
-        postcss([
-            autoprefixer()
-        ]),
-        gulp.dest("./_site/css")
-    ], cb);
+    const normalize = gulp.src("./node_modules/normalize.css/normalize.css");
+    const main = gulp.src("./_site/css/main.css")
+        .pipe(postcss([
+            autoprefixer(),
+            flexbugs()
+        ]));
+
+    return merge(normalize, main)
+        .pipe(concat("main.css"))
+        .pipe(gulp.dest("./_site/css"));
 });
 
 /*
@@ -101,10 +109,10 @@ function ImageType(name, dir) {
     this.name = name;
     this.dir = dir;
 
-    var cleanTaskName = name + "-clean";
+    var cleanTaskName = `${name}-clean`;
     gulp.task(cleanTaskName, function (cb) {
         pump([
-            gulp.src(dir + "/responsive/*"), 
+            gulp.src(`${dir}/responsive/*`),
             clean(),
             gulp.dest(dir)
         ], cb);
@@ -118,12 +126,12 @@ ImageType.prototype.newTask = function (settings, suffix) {
     gulp.task(taskName, function (cb) {
         pump([
             gulp.src([
-                dir + "/*",
-                "!" + dir + "/responsive"
+                `${dir}/*`,
+                `!${dir}/responsive`
             ]),
             imageResize(settings),
             rename({ suffix: suffix }),
-            gulp.dest(dir + "/responsive")
+            gulp.dest(`${dir}/responsive`)
         ], cb)
     });
     this.tasks.splice(-1, 0, taskName); // add second to last in task list; before the cleaning task
@@ -139,13 +147,13 @@ imageSizes["dp"].forEach(function (bp) {
         srcset.newTask({
             width: bp.x * d,
             filter: "Catrom"
-        }, "-" + Math.round(bp.x * d) + "w");
+        }, `-${Math.round(bp.x * d)}w`);
 
         pictures.newTask({
             width: bp.x * d,
             height: bp.y * d,
             filter: "Catrom"
-        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+        }, `-${bp.x}x${bp.y}-${d}x`);
 
         backgrounds.newTask({
             width: (bp.x * d),
@@ -153,8 +161,8 @@ imageSizes["dp"].forEach(function (bp) {
             cover: true,
             upscale: false,
             filter: "Catrom",
-            interlace: jekyllEnv == "production" ? true : false
-        }, "-" + bp.x + "x" + bp.y + "-" + d + "x");
+            interlace: jekyllEnv === "production" ? true : false
+        }, `-${bp.x}x${bp.y}-${d}x`);
     });
 });
 

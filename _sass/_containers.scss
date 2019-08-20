@@ -22,11 +22,11 @@
 }
 
 .fill-window {
-    @extend .fixed, .pos-0;
+    @extend .fixed, .pos-0, .screen-size;
 }
 
 .fill-parent {
-    @extend .absolute, .pos-0;
+    @extend .absolute, .pos-0, .full-size;
 }
 
 .expand-children {
@@ -63,4 +63,16 @@
 .render-3d {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+}
+
+.no-click {
+    pointer-events: none;
+}
+
+.click-through {
+    @extend .no-click;
+
+    & > * {
+        pointer-events: auto;
+    }
 }

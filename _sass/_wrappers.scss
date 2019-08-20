@@ -13,10 +13,11 @@
 }
 
 .content-wrapper {
-    @include wrapper(map-values($bp), map-get($spacings, m));
+    @include wrapper((large, laptop, mobile));
 }
 
 .text-wrapper {
+    box-sizing: content-box;
     max-width: $base-line-length;
 }
 
