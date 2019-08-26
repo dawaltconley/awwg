@@ -4,7 +4,8 @@
 fetch('/admin/config.yml').then(r => r.text()).then(data => generatePreviews(jsyaml.load(data)))
 
 const templates = [
-    {% for template in site.templates %}
+    {% assign templates = site.templates | concat: site.campaigns %}
+    {% for template in templates %}
         {
             name: `{{ template.template }}`,
             path: `{{ template.path }}`,
