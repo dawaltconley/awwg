@@ -30,6 +30,8 @@ logo:
 collections:
   campaigns:
     output: true
+  templates:
+    output: false
 
 defaults:
   - scope:
