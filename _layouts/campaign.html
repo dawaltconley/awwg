@@ -6,15 +6,12 @@ layout: basic
 
 <article class="text-wrapper margin-auto-h padding-l-v wrapper-padding v-rhythm">
 
-  <h1><!--field name="title"-->{{ page.title }}<!--/field--></h1>
+  <h1 data-preview-field="title">{{ page.title }}</h1>
 
-  <main>
-    <!--field widget="body"-->
+  <main data-preview-widget="body">
     {{ content }}
-    <!--/field-->
   </main>
 
-  <!--ignore-->
   {% assign folder_name = page.slug | append: '/' %}
   {% for file in site.campaigns %}
     {% if file.path contains folder_name %}
@@ -31,6 +28,5 @@ layout: basic
 
     {% endif %}
   {% endfor %}
-  <!--/ignore-->
 
 </article>

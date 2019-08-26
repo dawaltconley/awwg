@@ -6,12 +6,10 @@ layout: basic
 
 <article class="text-wrapper margin-auto-h padding-l-v wrapper-padding">
 
-  <h1><!--field name="title"-->{{ page.title }}<!--/field--></h1>
+  <h1 data-preview-field="title">{{ page.title }}</h1>
 
-  <main>
-    <!--field widget="body"-->
+  <main data-preview-widget="body">
     {{ content }}
-    <!--/field-->
   </main>
 
 </article>
