@@ -1,6 +1,9 @@
 ---
 ---
 
+{% assign horizontal = 'left center right' | split: ' ' %}
+{% assign vertical = 'top center bottom' | split: ' ' %}
+
 # https://www.netlifycms.org/docs/configuration-options/
 
 backend:
@@ -78,18 +81,60 @@ collections:
         name: body
         widget: markdown
         default: Information about the new campaign.
+        hint: >
+          Write <!-- more --> where you want to end the excerpt.
+          Otherwise, this defaults to the first full paragraph.
+          You can include an embedded YouTube or Vimeo video in the article
+          by writing, on its own line, {% raw %}{% include video.html link="https://example.link/video"
+          caption="optional video caption" %}{% endraw %}
       - label: Campaign Page Blurb
         name: blurb
         widget: markdown
         required: false
         hint: >
           Short description, used on the {{ c.short_title }} campaign page.
-          If blank, defaults to the first paragraph of the body.
+          If blank, defaults to the excerpt from the body body.
       - lable: Layout
         name: layout
         widget: hidden
         default: page
 {% endunless %}{% endfor %}
+  # - label: Comments
+  #   label_singular: Comment
+  #   name: comments
+  #   folder: _comments
+  #   editor:
+  #     preview: false
+  #   extension: md
+  #   format: yaml-frontmatter
+  #   create: false
+  #   identifier_field: replyTo
+  #   description: >
+  #     Comments appear here for moderation.
+  #   fields:
+  #     - label: Show on website
+  #       name: published
+  #       widget: boolean
+  #       default: false
+  #       hint: >
+  #         Switch this to approve this comment
+  #         and publish it to the website.
+  #     - name: replyTo
+  #       widget: hidden
+  #     - label: Commenter
+  #       name: name
+  #       widget: string
+  #     - label: Email
+  #       name: email
+  #       widget: string
+  #     - label: Comment Date
+  #       name: date
+  #       widget: datetime
+  #       format: "YYYY-MM-DD HH:mm:ss ZZ"
+  #       timeFormat: false
+  #     - label: Comment
+  #       name: body
+  #       widget: markdown
   - label: Data
     name: data
     editor:

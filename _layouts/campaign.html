@@ -22,7 +22,7 @@ layout: basic
       {% if file.blurb %}
         {% assign blurb = file.blurb | markdownify %}
       {% else %}
-        {% assign blurb = file.content | markdownify | split: '</p>' | first | split: '<p>' | last | prepend: '<p>' | append: '</p>' %}
+        {% assign blurb = file.excerpt | markdownify %}
       {% endif %}
       {{ blurb }}
 
